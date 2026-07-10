@@ -1,4 +1,15 @@
 #!/usr/bin/env sh
+#
+# validate-wiki.sh — 独立的仓库完整性预检脚本（默认不自动挂载为钩子）。
+# 检查：必需文件存在、raw/ 只增不改（git 维度）、wiki 索引/日志标题规范、运行时钩子目录存在。
+#
+# 运行方式（在仓库根目录执行）：
+#   sh .claude/hooks/validate-wiki.sh
+#
+# 如需在 Claude Code 中自动触发，可在 .claude/settings.json 的 hooks 中挂载
+# （PreToolUse 或 PostToolUse，matcher 指向 Edit/Write）；本项目工具无关，默认不挂载，
+# 详见 README「校验脚本」一节。
+#
 set -eu
 
 fail() {

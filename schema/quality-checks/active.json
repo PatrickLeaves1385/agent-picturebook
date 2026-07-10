@@ -1,8 +1,8 @@
 {
-  "_schema_version": 3,
+  "_schema_version": 4,
   "_description": "当前启用的质检项清单。增删改质检项只需编辑本文件，无需修改 Agent 代码。",
   "_usage": "quality-agent 启动时读取本文件，仅执行 active_checks 中列出的质检项。key 为 category/filename（不含扩展名），指向 schema/quality-checks/{key}.md。",
-  "_last_updated": "2026-07-06",
+  "_last_updated": "2026-07-08",
 
   "active_checks": [
     "text/lexile",
@@ -43,46 +43,16 @@
   },
 
   "_skill_groups": {
-    "_description": "声明共享 Skill 的质检项分组。quality-agent 按 group 调度，同一 group 内只调一次 Skill，结果映射回各项。",
+    "_description": "声明共享 Skill 的质检项分组。quality-agent 按 group 调度，同一 group 内只调一次 Skill（用 Skill 工具直接调用），结果映射回各项。text/awl 依赖 text/lexile 的同次调用结果，已通过分组本身表达，无需单独的依赖图。",
     "groups": [
       {
         "id": "lexile-awl",
         "skill": "lexile-check",
-        "api_call_type": "bash-local",
         "checks": ["text/lexile", "text/awl"],
         "result_mapping": {
           "text/lexile": "lexileEstimate",
           "text/awl": "awlCoverage"
         }
-      }
-    ]
-  },
-
-  "_api_call_types": {
-    "_description": "method=api 的两种规范调用路径声明。新增 api 类质检项时必须指定类型。",
-    "types": {
-      "bash-local": {
-        "description": "本地脚本类（Skill 内部封装 python/node 脚本）",
-        "call_pattern": "Skill tool 调用 Skill 名 → Skill 内部用 Bash 调脚本",
-        "applicable_skills": ["lexile-check"],
-        "rationale": "脚本在本地执行，无需 ToolSearch；Skill 内部统一处理环境自检/重试/超时。"
-      },
-      "external-tool": {
-        "description": "外部能力类（需通过 ToolSearch+DeferExecuteTool 调用的能力）",
-        "call_pattern": "ToolSearch(tool_names=[X]) → DeferExecuteTool(toolName=X, params={...})",
-        "applicable_skills": ["illustration-generate"],
-        "rationale": "能力由工具平台提供（如 ImageGen），Agent 直接调用；ToolSearch 用于动态加载 schema。"
-      }
-    }
-  },
-
-  "_depends_on": {
-    "_description": "质检项间的依赖关系。quality-agent 按依赖图拓扑排序，被依赖项先执行。",
-    "dependencies": [
-      {
-        "id": "text/awl",
-        "depends_on": ["text/lexile"],
-        "reason": "共享 lexile-check Skill 一次调用结果，awl 依赖 lexile 的同次 API 响应（已在 _skill_groups 中合并执行；此处显式声明便于调度排序）"
       }
     ]
   }

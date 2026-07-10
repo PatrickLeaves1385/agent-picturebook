@@ -6,6 +6,7 @@ method: "semantic"
 target: "角色行为匹配度 >= 80%"
 skill: null
 fail_action: "flag"
+priority: "project-overridable"
 description: "校验脚本中角色行为和语言风格是否与 wiki 中的角色设定一致。量化锚点：设定特征匹配度（自动统计+LLM审查）。角色设定来源为 wiki-context。"
 ---
 # 角色一致性检测

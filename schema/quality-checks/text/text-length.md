@@ -6,6 +6,7 @@ method: "count"
 target: "每页 1-2 句，每句 5-10 词"
 skill: null
 fail_action: "flag"
+priority: "project-overridable"
 description: "校验每页文字量是否在 1-2 句、每句约 5-10 词的范围内。过长或过短影响低龄儿童阅读体验。"
 ---
 # 每页文字量校验

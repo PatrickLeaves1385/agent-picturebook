@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "sh .claude/hooks/validate-wiki.sh" }
+        ]
+      }
+    ]
+  }
+}

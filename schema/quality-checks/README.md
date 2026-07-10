@@ -39,7 +39,11 @@ method: "api"                   # api | pattern | count | semantic | manual
 target: "250-300"               # 目标值/范围
 skill: "lexile-check"           # method=api 时调用的 Skill 名称
 fail_action: "flag"             # block（阻断流程）| flag（标注继续）
+priority: "project-overridable" # project-overridable | global-only（L4 要求声明，缺失视为 project-overridable 并给 WARNING）
 description: "一句话描述检测逻辑"
+# 可选扩展字段：
+# activation_mode: "always-on"   # 仅恒定激活项使用（如 basic-safety）
+# target_source: "active.json | project.content-spec.md"  # 目标值来源说明
 ---
 # 详细说明（可选）
 ```

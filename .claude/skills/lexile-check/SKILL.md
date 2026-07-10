@@ -201,7 +201,7 @@ $PYTHON "{{SKILL_DIR}}/lexile_api.py" <temp_file> --no-chunk
 | AWL Words / Tier 2 Vocab | 检出词汇列表 |
 
 **绘本项目验收参考：**
-- 目标蓝思值: 250L-300L
+- 目标蓝思值: 250L-350L
 - AWL 覆盖率: <2% 为佳（绘本 = 日常语言）
 - Lexile < 250 → 句子过短，增加 1-2 个复合句
 - Lexile > 300 → 句子过长，拆分或替换低频词
@@ -209,6 +209,27 @@ $PYTHON "{{SKILL_DIR}}/lexile_api.py" <temp_file> --no-chunk
 ### 步骤 4: 报告与清理
 
 将结果以表格展示，判断是否在目标区间内。清理临时文件。
+
+### 步骤 3.5：结构化输出契约（供 quality-agent 解析）
+
+`quality-agent` 通过 `active.json` 的 `_skill_groups.result_mapping` 读取本 Skill 的返回字段（`text/lexile → lexileEstimate`、`text/awl → awlCoverage`）。因此本 Skill 在给出人类可读表格的同时，**必须**输出一段可被解析的结构化 JSON，字段与 `lexile_api.py` 的 API 响应一致：
+
+```json
+{
+  "lexileEstimate": 265,
+  "awlCoverage": 1.8,
+  "awlWords": ["demonstrate", "..."],
+  "tier2Words": ["..."],
+  "wordCount": 120,
+  "sentenceCount": 12,
+  "registerAssessment": "...",
+  "note": ""   // 可选："(Chunked analysis)" / "(Low word count)"
+}
+```
+
+- `lexileEstimate`、`awlCoverage` 为必填，quality-agent 据此比对 `target`（默认 250-350L，AWL <2%）。
+- 分块或低词数时通过 `note` 字段标注，不丢失调试信息。
+- 目标区间以 `schema/quality-checks/text/lexile.md`（250-350L）与项目级 `content-spec.md` 覆盖值为准。
 
 ## 常见问题
 

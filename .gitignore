@@ -1,6 +1,19 @@
 # 项目运行时数据（缓存 + 会话记忆），不入版本控制
 .agent-cache/
 
+# 用户原始资料（体积大/含二进制，本地留存，不入版本控制）
+raw/
+
+# Agent 生成产出物（图片等二进制产物，版本化靠文件名而非 git 历史）
+outputs/
+
+# 会话导出产物（按需分享，默认不入库）
+data_collect/
+
+# wiki 知识内容本地留存，不入版本控制；index.md/log.md（导航+日志）仍追踪
+wiki/domains/
+wiki/projects/
+
 # Python
 __pycache__/
 *.pyc
@@ -12,5 +25,5 @@ __pycache__/
 *.swp
 *.swo
 
-# Claude Code 本地权限配置（机器/会话专属，不入库）
-.claude/settings.local.json
+# WorkBuddy 项目数据
+.workbuddy/

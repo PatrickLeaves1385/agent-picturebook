@@ -6,6 +6,7 @@ method: "manual"
 target: "跨页面风格一致"
 skill: null
 fail_action: "flag"
+priority: "project-overridable"
 description: "标注需要人工审阅的跨页面风格一致性检测。目前由人工判断，未来可接入 AI 图像一致性分析。"
 ---
 # 风格一致性检测（人工）

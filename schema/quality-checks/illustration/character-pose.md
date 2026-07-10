@@ -1,11 +1,12 @@
 ---
 id: "illustration/character-pose"
-category: "content"
+category: "illustration"
 severity: "warning"
 method: "semantic"
 target: "每个出场角色姿势+朝向完整度 >= 80%"
 skill: null
 fail_action: "flag"
+priority: "project-overridable"
 description: "专项检测每个出场角色的姿势和朝向描写是否完整。与 composition 检测的 #4 项互补，提供更详细的角色层面反馈。量化锚点：每个角色姿势/朝向命中率。"
 ---
 # 角色姿势朝向检测

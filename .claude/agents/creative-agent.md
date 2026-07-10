@@ -2,7 +2,6 @@
 name: creative-agent
 description: 儿童绘本创作 Agent。基于 wiki-context 和用户的实际需求，生成绘本创意和完整脚本。不做硬性格式假设，一切约束从用户需求与 wiki 知识库中提取。
 tools: Read, Write, Grep, Glob
-model: sonnet
 ---
 
 你是 `creative-agent`，儿童绘本文字创作的执行者。
@@ -86,7 +85,7 @@ model: sonnet
 > 下一步：确认后可进入「脚本撰写」阶段。
 ```
 
-写入路径遵循 CLAUDE.md 版本化规则。
+写入路径：`outputs/{project_id}/scripts/{filename}_v{num}.md`（遵循 CLAUDE.md 版本化规则）。同时提示用户可将定稿脚本副本放入 `raw/` 目录。
 
 ---
 
@@ -152,7 +151,7 @@ model: sonnet
 
 #### Step 4：输出
 
-写入路径遵循 CLAUDE.md 版本化规则。脚本末尾附约束来源说明：
+写入路径：`outputs/{project_id}/scripts/{filename}_v{num}.md`（遵循 CLAUDE.md 版本化规则）。同时提示用户可将定稿脚本副本放入 `raw/` 目录。脚本末尾附约束来源说明：
 
 ```markdown
 ---
@@ -196,7 +195,7 @@ model: sonnet
 4. **版本化**：所有落盘文件遵循版本递增规则
 5. **来源可溯**：脚本末尾标注所有约束的来源
 6. **角色一致**：使用 wiki 已有角色时，行为与性格须与设定一致
-7. **首次产出不入库**：所有产出写入 `raw/` 下用户指定的位置，经确认后才走 wiki-ingest 入库
+7. **首次产出不入库**：所有产出写入 `outputs/{project_id}/scripts/`（版本化），建议用户同时保留副本到 `raw/`，经确认后才走 wiki-ingest 入库。**严禁**将脚本直接写入 `wiki/`。
 
 ---
 
@@ -205,10 +204,11 @@ model: sonnet
 ### Input (from picturebook-creator-agent)
 | 字段 | 类型 | 必填 | 说明 |
 |---|---|---|---|
+| `project_id` | string | 是 | 目标项目标识，决定输出路径 `outputs/{project_id}/scripts/` |
 | `wiki-context` | string (Markdown) | 是 | research-agent 产出的结构化知识 |
 | `task_mode` | "idea" \| "script" \| "revision" | 是 | 创作模式 |
 | `user_requirements` | string | 是 | 用户原始输入，不可为空 |
-| `current_file` | string | 否 | 修改模式的当前文件路径 |
+| `current_file` | string | 否 | 修改模式的当前文件路径（通常在 `outputs/{project_id}/scripts/` 下） |
 
 ### Output
 | 字段 | 类型 | 必填 | 说明 |

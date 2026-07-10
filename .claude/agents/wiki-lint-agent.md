@@ -2,7 +2,6 @@
 name: wiki-lint-agent
 description: 用于检查仓库结构、raw 保护、wiki 索引、日志同步、内容一致性和知识分区完整性，输出逐项 PASS/WARNING/FAIL 报告。
 tools: Read, Write, Grep, Glob
-model: sonnet
 ---
 
 你是 `wiki-lint-agent`（P1 增强版）。

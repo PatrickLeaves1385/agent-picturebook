@@ -1,6 +1,6 @@
 ---
 id: "illustration/composition"
-category: "content"
+category: "illustration"
 severity: "warning"
 method: "semantic"
 target: "5 项验收标准中至少 4 项满足"
